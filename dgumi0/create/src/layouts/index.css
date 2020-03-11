@@ -26,3 +26,7 @@
 .sitelayout .sitelayoutbackground {
   background: #fff;
 }
+.layoutlogin {
+  float: left;
+  margin-left: 2px;
+}

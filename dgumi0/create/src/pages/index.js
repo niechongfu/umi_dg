@@ -1,6 +1,7 @@
 import styles from './index.css';
 
 export default function(props) {
+  // console.log(props);
   return (
     <div className={styles.normal}>
       <div className={styles.welcome} />

@@ -1,11 +1,24 @@
 import styles from './index.css';
-import { Icon } from 'antd';
+// import { Icon } from 'antd';
 import { Login } from 'ant-design-pro';
+
+import { connect } from 'dva';
 const { UserName, Password, Submit } = Login;
 
-const LoginDemo = props => {
+export default connect(({ login: payload, loading }) => {
+  console.log(payload, loading.login);
+})(function(props) {
+  // console.log('props:', props);
+
   const onSubmit = (err, v) => {
-    console.log('Success:', v);
+    if (!err) {
+      props.dispatch({ type: 'login/login', payload: v });
+      // const { username, password } = v;
+      // console.log('Success:', v);
+      // if (username === 'dgyc' && password === '123') {
+      //   router.push('/');
+      // }
+    }
   };
 
   return (
@@ -29,12 +42,21 @@ const LoginDemo = props => {
               required: true,
               message: 'Please input your password!',
             },
+            {
+              validator: async (rule, value) => {
+                // console.log(value);
+                // console.log(rule);
+                if (value.length < 3) {
+                  throw new Error('Something wrong!');
+                }
+              },
+            },
           ]}
         />
         <Submit>Login</Submit>
       </Login>
     </div>
   );
-};
+});
 
-export default LoginDemo;
+// export default LoginDemo;
