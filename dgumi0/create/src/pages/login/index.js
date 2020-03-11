@@ -5,9 +5,10 @@ import { Login } from 'ant-design-pro';
 import { connect } from 'dva';
 const { UserName, Password, Submit } = Login;
 
-export default connect(({ login: payload, loading }) => {
-  console.log(payload, loading.login);
-})(function(props) {
+export default connect(({ login: payload, loading }) => ({
+  payload,
+  loading,
+}))(function(props) {
   // console.log('props:', props);
 
   const onSubmit = (err, v) => {

@@ -7,17 +7,17 @@ const { Header, Sider, Content } = Layout;
 
 function BasicLayout(props) {
   const { location } = props;
-  // console.log(location.pathname);
+  console.log(props.route);
   const path = location.pathname;
   const isUser = !!localStorage.getItem('userinfo');
-  console.log(path);
+  // console.log('location', props.history);
 
-  const toLogin = path => {
-    if (path === '/login' && !isUser) {
+  if (path === '/login') {
+    if (!isUser) {
       return <>{props.children}</>;
     }
-  };
-  toLogin(path);
+    router.push('/');
+  }
 
   const selectedKeys = [path];
 
@@ -29,9 +29,43 @@ function BasicLayout(props) {
   let username = '';
   if (isUser) {
     username = JSON.parse(localStorage.getItem('userinfo')).username;
-    console.log('user', username);
+    // console.log('user', username);
   }
 
+  const Siderdata = [
+    { path: '/', name: '首页', roles: ['user', 'admin'] },
+    { path: '/user', name: '用户', roles: ['user', 'admin'] },
+    { path: '/about', name: '关于', roles: ['admin'] },
+  ];
+
+  const toSider = () => {
+    const { role } = JSON.parse(localStorage.getItem('userinfo')) || 'user';
+    console.log(role);
+    const adminSide = Siderdata.filter(v => v.roles.some(r => r === role));
+
+    return adminSide.map(v => {
+      return (
+        <Menu.Item key={v.path}>
+          <Link to={v.path}>
+            <span>{v.name}</span>
+          </Link>
+        </Menu.Item>
+      );
+    });
+  };
+  toSider();
+  console.log(toSider());
+  // {
+  //   Siderdata.map(v => {
+  //     return (
+  //       <Menu.Item key={v.path}>
+  //         <Link to={v.path}>
+  //           <span>{v.name}</span>
+  //         </Link>
+  //       </Menu.Item>
+  //     );
+  //   });
+  // }
   const menu = (
     <Menu>
       <Menu.Item>
@@ -45,12 +79,12 @@ function BasicLayout(props) {
     </Menu>
   );
   return (
-    <div className={styles.normal} {...props}>
+    <div className={styles.normal} authority={['admin', 'user']}>
       <Layout>
         <Sider trigger={null} collapsible>
           <div className={styles.logo}>XXZX</div>
           <Menu theme="dark" mode="inline" selectedKeys={selectedKeys}>
-            <Menu.Item key="/">
+            {/* <Menu.Item key="/">
               <Link to="/">
                 <span>首页</span>
               </Link>
@@ -64,7 +98,8 @@ function BasicLayout(props) {
               <Link to="/about">
                 <span>关于</span>
               </Link>
-            </Menu.Item>
+            </Menu.Item> */}
+            {toSider()}
           </Menu>
         </Sider>
         <Layout className={styles.sitelayout}>

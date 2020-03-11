@@ -15,14 +15,17 @@ export default {
     {
       path: '/',
       component: '../layouts/index',
+      // Routes: ['./src/authorized.js'],
       routes: [
         {
           path: '/',
           component: './index',
+          // Routes: ['./src/authorized.js'],
         },
         {
           path: '/about',
           component: './user/about',
+          // Routes: ['./src/authorized.js'],
         },
         {
           path: '/login',
@@ -31,6 +34,7 @@ export default {
         {
           path: '/user',
           component: './user/index',
+          // Routes: ['./src/authorized.js'],
         },
         {
           component: './404',
