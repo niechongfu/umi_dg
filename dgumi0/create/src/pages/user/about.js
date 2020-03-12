@@ -1,23 +1,26 @@
-import Login from 'ant-design-pro/lib/Login';
-const { UserName, Password, Submit } = Login;
-// import styles from './about.css';
+import { Icon,Modal, Button } from 'antd';
+import Register from "./register"
+import styles from './about.css';
 
 const LoginDemo = props => {
   // console.log(props);
-  const onSubmit = (err, v) => {
-    console.log('Success:', v);
-  };
+  
 
   return (
     <div>
-      <div>about</div>
-      <Login onSubmit={onSubmit}>
-        <UserName name="username" />
-        <Password name="password" />
-        <Submit>Login</Submit>
-      </Login>
+      <Button type="primary" >注册</Button>
+      <Modal
+          title="用户注册"
+          visible={false}
+          footer={null}
+          centered
+          // destroyOnClose={true}
+        >
+        </Modal>
+      <Register></Register>
     </div>
   );
-};
+}
+
 
 export default LoginDemo;

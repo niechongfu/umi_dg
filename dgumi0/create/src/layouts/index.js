@@ -7,7 +7,7 @@ const { Header, Sider, Content } = Layout;
 
 function BasicLayout(props) {
   const { location } = props;
-  console.log(props.route);
+  // console.log(props.route);
   const path = location.pathname;
   const isUser = !!localStorage.getItem('userinfo');
   // console.log('location', props.history);
@@ -40,7 +40,7 @@ function BasicLayout(props) {
 
   const toSider = () => {
     const { role } = JSON.parse(localStorage.getItem('userinfo')) || 'user';
-    console.log(role);
+    // console.log(role);
     const adminSide = Siderdata.filter(v => v.roles.some(r => r === role));
 
     return adminSide.map(v => {
@@ -53,8 +53,8 @@ function BasicLayout(props) {
       );
     });
   };
-  toSider();
-  console.log(toSider());
+  // toSider();
+  // console.log(toSider());
   // {
   //   Siderdata.map(v => {
   //     return (
@@ -106,7 +106,7 @@ function BasicLayout(props) {
           <Header className={styles.sitelayoutbackground} style={{ padding: 0 }}>
             <div className={styles.layoutlogin}>
               <Dropdown overlay={menu} placement="bottomLeft" style={{ float: 'right' }}>
-                <Button>您好：{username}</Button>
+                <Button type="link">您好：{username}</Button>
               </Dropdown>
             </div>
           </Header>
