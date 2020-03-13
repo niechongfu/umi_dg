@@ -21,10 +21,12 @@ const Userabout = () => {
   };
   return (
     <div>
-      <div>
+      <div className={styles.header}>
         {disabled ? null : (
           // <Button onClick={onSubmit}>用户信息提交</Button>
-          <Button onClick={onModify}>用户信息修改</Button>
+          <Button onClick={onModify} type="primary" ghost>
+            用户信息修改
+          </Button>
         )}
       </div>
       {disabled ? <Modifyuser onSubmit={onSubmit}></Modifyuser> : <Userinfo></Userinfo>}

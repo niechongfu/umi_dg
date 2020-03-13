@@ -9,3 +9,12 @@
   margin-top: 30px;
   border: 1px solid rgb(165, 231, 195);
 }
+.header {
+  padding: 10px;
+  border-bottom: 2px solid #eee;
+  margin-bottom: 10px;
+  text-align: left;
+}
+.modifybut {
+  margin-right: 20px;
+}

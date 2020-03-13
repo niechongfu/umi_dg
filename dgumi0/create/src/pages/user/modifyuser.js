@@ -75,11 +75,18 @@ const LoginDemo = Form.create()(props => {
             })(<Input placeholder="1368205921@qq.com" />)}
           </Form.Item>
           <Form.Item {...tailFormItemLayout}>
-            <Button type="primary" htmlType="submit" onClick={handleSubmit}>
+            <Button
+              type="primary"
+              htmlType="submit"
+              onClick={handleSubmit}
+              className={styles.modifybut}
+              type="primary"
+              ghost
+            >
               提交
             </Button>
-            <Button type="primary" htmlType="submit" onClick={disModify}>
-              放弃修改
+            <Button type="primary" htmlType="submit" onClick={disModify} type="danger" ghost>
+              放弃
             </Button>
           </Form.Item>
         </Form>
@@ -115,23 +122,23 @@ const tailFormItemLayout = {
       offset: 0,
     },
     sm: {
-      span: 16,
+      span: 24,
       offset: 0,
     },
     md: {
-      span: 16,
+      span: 24,
       offset: 0,
     },
     lg: {
-      span: 16,
+      span: 24,
       offset: 0,
     },
     xl: {
-      span: 16,
+      span: 24,
       offset: 0,
     },
     xxl: {
-      span: 16,
+      span: 24,
       offset: 0,
     },
   },

@@ -97,7 +97,6 @@ function BasicLayout(props) {
               minHeight: 580,
             }}
           >
-            Content
             {props.children}
           </Content>
         </Layout>
