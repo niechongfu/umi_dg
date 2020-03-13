@@ -3,7 +3,7 @@
 }
 .head {
   padding: 10px;
-  border: 2px solid #eee;
+  border-bottom: 2px solid #eee;
 }
 .table {
   margin-top: 30px;

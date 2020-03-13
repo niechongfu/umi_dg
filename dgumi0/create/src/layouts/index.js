@@ -1,11 +1,13 @@
 import styles from './index.css';
-// import PropTypes from 'prop-types';
-import { Layout, Menu, Button, Dropdown } from 'antd';
+import { useState } from 'react';
+import { Layout, Menu, Button, Dropdown, Modal } from 'antd';
 import Link from 'umi/link';
 import router from 'umi/router';
+import Pwdchange from '../pages/user/pwdchange';
 const { Header, Sider, Content } = Layout;
 
 function BasicLayout(props) {
+  const [visible, setVisible] = useState(false);
   const { location } = props;
   // console.log(props.route);
   const path = location.pathname;
@@ -20,7 +22,13 @@ function BasicLayout(props) {
   }
 
   const selectedKeys = [path];
-
+  const onSubmit = e => {
+    console.log(e);
+    //获得注册的信息进行注册 dispatch
+  };
+  const changepwd = () => {
+    setVisible(true);
+  };
   const layout = () => {
     localStorage.removeItem('userinfo');
     router.push('/login');
@@ -53,25 +61,11 @@ function BasicLayout(props) {
       );
     });
   };
-  // toSider();
-  // console.log(toSider());
-  // {
-  //   Siderdata.map(v => {
-  //     return (
-  //       <Menu.Item key={v.path}>
-  //         <Link to={v.path}>
-  //           <span>{v.name}</span>
-  //         </Link>
-  //       </Menu.Item>
-  //     );
-  //   });
-  // }
+
   const menu = (
     <Menu>
       <Menu.Item>
-        <a target="_blank" rel="noopener noreferrer" href="http://www.alipay.com/">
-          修改密码
-        </a>
+        <span onClick={changepwd}>修改密码</span>
       </Menu.Item>
       <Menu.Item>
         <span onClick={layout}>退出登录</span>
@@ -84,21 +78,6 @@ function BasicLayout(props) {
         <Sider trigger={null} collapsible>
           <div className={styles.logo}>XXZX</div>
           <Menu theme="dark" mode="inline" selectedKeys={selectedKeys}>
-            {/* <Menu.Item key="/">
-              <Link to="/">
-                <span>首页</span>
-              </Link>
-            </Menu.Item>
-            <Menu.Item key="/user">
-              <Link to="/user">
-                <span>用户</span>
-              </Link>
-            </Menu.Item>
-            <Menu.Item key="/about">
-              <Link to="/about">
-                <span>关于</span>
-              </Link>
-            </Menu.Item> */}
             {toSider()}
           </Menu>
         </Sider>
@@ -123,6 +102,20 @@ function BasicLayout(props) {
           </Content>
         </Layout>
       </Layout>
+      <Modal
+        title="密码更改"
+        headerStyle={{ textAlign: 'right' }}
+        visible={visible}
+        footer={null}
+        maskClosable
+        centered
+        onCancel={() => {
+          setVisible(false);
+        }}
+        destroyOnClose={true}
+      >
+        <Pwdchange onSubmit={onSubmit}></Pwdchange>
+      </Modal>
     </div>
   );
 }

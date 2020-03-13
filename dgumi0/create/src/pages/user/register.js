@@ -1,4 +1,4 @@
-import { Form, Input, Icon, Button } from 'antd';
+import { Cascader, Form, Input, Button } from 'antd';
 // import styles from './about.css';
 
 const Register = Form.create()(props => {
@@ -52,6 +52,18 @@ const Register = Form.create()(props => {
     // console.log(reg.test(value));
     callback();
   };
+  const validateToname = (rule, value, callback) => {
+    //   const reg = /^1[3-9]\d{9}/;
+    const reg = /^[\u4E00-\u9FA5]{2,4}$/;
+
+    if (!reg.test(value)) {
+      callback('请输入正确的姓名!');
+    }
+    callback();
+  };
+  function onChange(value, selectedOptions) {
+    console.log(value, selectedOptions);
+  }
   const { getFieldDecorator } = props.form;
   // console.log(props.form)
 
@@ -111,10 +123,21 @@ const Register = Form.create()(props => {
             ],
           })(<Input.Password onBlur={handleConfirmBlur} />)}
         </Form.Item>
-        <Form.Item label={<span> 昵称</span>}>
+        <Form.Item label={<span> 姓名</span>}>
           {getFieldDecorator('Nickname', {
-            rules: [{ required: true, message: '请输入你的昵称!', whitespace: true }],
+            rules: [
+              { required: true, message: '请输入你的名字!', whitespace: true },
+              {
+                validator: validateToname,
+              },
+            ],
           })(<Input />)}
+        </Form.Item>
+        <Form.Item label={<span>部门</span>}>
+          {getFieldDecorator('department', {
+            rules: [{ required: true, message: '请输入你的部门!' }],
+          })(<Cascader options={options} onChange={onChange} placeholder="请选择你的部门!" />)}
+          {/* <Cascader options={options} onChange={onChange} placeholder="请选择你的部门!" /> */}
         </Form.Item>
         <Form.Item label="手机">
           {getFieldDecorator('phone', {
@@ -151,3 +174,42 @@ const Register = Form.create()(props => {
 });
 
 export default Register;
+const options = [
+  {
+    value: 'zhejiang',
+    label: 'Zhejiang',
+    children: [
+      {
+        value: 'hangzhou',
+        label: 'Hangzhou',
+        children: [
+          {
+            value: 'xihu',
+            label: 'West Lake',
+          },
+          {
+            value: 'xiasha',
+            label: 'Xia Sha',
+            disabled: true,
+          },
+        ],
+      },
+    ],
+  },
+  {
+    value: 'jiangsu',
+    label: 'Jiangsu',
+    children: [
+      {
+        value: 'nanjing',
+        label: 'Nanjing',
+        children: [
+          {
+            value: 'zhonghuamen',
+            label: 'Zhong Hua men',
+          },
+        ],
+      },
+    ],
+  },
+];

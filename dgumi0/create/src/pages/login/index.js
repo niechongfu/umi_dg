@@ -1,5 +1,7 @@
 import styles from './index.css';
-// import { Icon } from 'antd';
+import Register from '../user/register';
+import { useState } from 'react';
+import { Button, Modal } from 'antd';
 import { Login } from 'ant-design-pro';
 
 import { connect } from 'dva';
@@ -10,6 +12,7 @@ export default connect(({ login: payload, loading }) => ({
   loading,
 }))(function(props) {
   // console.log('props:', props);
+  const [visible, setVisible] = useState(false);
 
   const onSubmit = (err, v) => {
     if (!err) {
@@ -20,6 +23,19 @@ export default connect(({ login: payload, loading }) => ({
       //   router.push('/');
       // }
     }
+  };
+
+  const onOk = e => {
+    console.log(e);
+    //获得注册的信息进行注册 dispatch
+  };
+  const handlRegit = e => {
+    setVisible(true);
+    //获得注册的信息进行注册 dispatch
+  };
+  const handlReget = e => {
+    setVisible(true);
+    //获得注册的信息进行注册 dispatch
   };
 
   return (
@@ -54,8 +70,28 @@ export default connect(({ login: payload, loading }) => ({
             },
           ]}
         />
-        <Submit>Login</Submit>
+        <Submit>登录</Submit>
       </Login>
+      <Button type="link" onClick={handlRegit}>
+        新用户注册
+      </Button>
+      <Button type="link" onClick={handlReget}>
+        忘记密码
+      </Button>
+      <Modal
+        title="用户注册"
+        headerStyle={{ textAlign: 'right' }}
+        visible={visible}
+        footer={null}
+        maskClosable
+        centered
+        onCancel={() => {
+          setVisible(false);
+        }}
+        destroyOnClose={true}
+      >
+        <Register onSubmit={onOk}></Register>
+      </Modal>
     </div>
   );
 });
