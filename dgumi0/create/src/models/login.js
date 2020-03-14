@@ -14,7 +14,7 @@ function login(payload) {
 
 export default {
   namespace: 'login',
-  state: userinfo,
+  state: { userinfo, isLogin: false },
   effects: {
     *login({ payload }, { call, put }) {
       const {
@@ -30,7 +30,11 @@ export default {
   },
   reducers: {
     init: (state, { payload }) => {
-      return payload;
+      // console.log(state, payload);
+      state = { ...state, userinfo: payload, isLogin: true };
+      localStorage.setItem('isLogin', JSON.stringify(state.isLogin));
+      // console.log(state);
+      return state;
     },
   },
 };

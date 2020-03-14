@@ -6,21 +6,55 @@ import router from 'umi/router';
 import Pwdchange from '../pages/user/pwdchange';
 const { Header, Sider, Content } = Layout;
 
+const Siderdata = [
+  { path: '/', name: '首页', roles: ['user', 'admin'] },
+  { path: '/user', name: '用户', roles: ['user', 'admin'] },
+  { path: '/about', name: '关于', roles: ['admin'] },
+];
+
 function BasicLayout(props) {
+  // console.log(props);
   const [visible, setVisible] = useState(false);
   const { location } = props;
   // console.log(props.route);
   const path = location.pathname;
   const isUser = !!localStorage.getItem('userinfo');
-  // console.log('location', props.history);
+  const isLogin = !!localStorage.getItem('isLogin');
+  const { token, role, username } = JSON.parse(localStorage.getItem('userinfo')) || {
+    token: '',
+    role: '',
+    username: '',
+  };
+
+  const authority = path => {
+    if (path !== '/404') {
+      if (!isUser && !isLogin) {
+        router.push('/login');
+        return null;
+        // return <>{props.children}</>;
+      }
+      const paths = Siderdata.filter(v => v.roles.some(r => r === role));
+      // console.log(paths);
+      // console.log(path);
+      const isPath = paths.some(v => v.path === path);
+      if (!isPath) {
+        router.replace('/404');
+        // return <>{props.children}</>;
+      }
+    }
+    // console.log(isPath);
+  };
 
   if (path === '/login') {
-    if (!isUser) {
+    if (!isUser && !isLogin) {
       return <>{props.children}</>;
     }
     router.push('/');
+  } else {
+    authority(path);
   }
 
+  // authority(path);
   const selectedKeys = [path];
   const onSubmit = e => {
     console.log(e);
@@ -31,20 +65,10 @@ function BasicLayout(props) {
   };
   const layout = () => {
     localStorage.removeItem('userinfo');
-    router.push('/login');
+    localStorage.removeItem('isLogin');
+    router.replace('/login');
   };
   // console.log('props', { ...props });
-  let username = '';
-  if (isUser) {
-    username = JSON.parse(localStorage.getItem('userinfo')).username;
-    // console.log('user', username);
-  }
-
-  const Siderdata = [
-    { path: '/', name: '首页', roles: ['user', 'admin'] },
-    { path: '/user', name: '用户', roles: ['user', 'admin'] },
-    { path: '/about', name: '关于', roles: ['admin'] },
-  ];
 
   const toSider = () => {
     const { role } = JSON.parse(localStorage.getItem('userinfo')) || 'user';

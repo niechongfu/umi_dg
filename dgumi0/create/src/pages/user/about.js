@@ -1,8 +1,8 @@
 // import { Cascader, Form, Button, Input, Row, Col } from 'antd';
+import styles from './about.css';
 import { useState } from 'react';
 import Modifyuser from './modifyuser';
 import Userinfo from './userinfo';
-import styles from './about.css';
 import { Button } from 'antd';
 
 const Userabout = () => {
